@@ -57,9 +57,11 @@
     "@adonisjs/cors": "^2.2.1",
     "@adonisjs/env": "^6.1.0",
     "@adonisjs/lucid": "^21.2.0",
+    "@adonisjs/validator": "^13.0.2-3",
     "@vinejs/vine": "^2.1.0",
     "luxon": "^3.5.0",
-    "mysql2": "^3.11.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.11.3",
     "reflect-metadata": "^0.2.2"
   },
   "hotHook": {

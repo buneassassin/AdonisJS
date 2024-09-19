@@ -1,4 +1,7 @@
+import Persona from '#models/persona'
+import { schema, rules } from '@adonisjs/validator'
 import { HttpContext } from '@adonisjs/core/http'
+
 
 export default class TablasMultiplicarsController {
   public async index({ params, response }: HttpContext) {
@@ -86,4 +89,22 @@ export default class TablasMultiplicarsController {
       msg: 'Ha habido un error al momento de ingresar los datos'
     })
   }
+
+  public async store({ request, response }: HttpContext) {
+    const personaSchema = schema.create({
+      nombre: schema.string({}, [rules.maxLength(60)]),
+      apellido_paterno: schema.string({}, [rules.maxLength(60)]),
+      apellido_materno: schema.string.optional({}, [rules.maxLength(60)])
+    })
+  
+    const data = await request.validate({ schema: personaSchema })
+    const persona = await Persona.create(data)
+  
+    return response.status(201).json({
+      msg: 'Persona creada correctamente',
+      datos: persona
+    })
+  }
+  
+
 }

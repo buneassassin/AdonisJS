@@ -12,3 +12,5 @@ import TablasMultiplicarsController from '#controllers/tablas_multiplicars_contr
 
 // router.get('/tablas/{num1?}/{num2?}/{fibonacci?}', [TablasMultiplicarsController,'index'])
 router.get('/tablas/:num1?/:num2?/:fibonacci?', [TablasMultiplicarsController,'index'])
+
+router.post('/personas', [TablasMultiplicarsController,'store'])
