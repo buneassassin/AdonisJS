@@ -1,132 +1,105 @@
 import type { HttpContext } from '@adonisjs/core/http'
 
+
+class name {
+  protected palabrai: string[] = ['Hexakosioihexekontahexafobia', 'Vivienda', 'Santo', 'Padres', 'Mano', 'Feo'];
+  obtenerNumeroAleatori(): string {
+    const alea = Math.floor(Math.random() * this.palabrai.length);
+    return this.palabrai[alea];
+  }
+}
+
 export default class AhorcadosController {
-    public async handleCookies(ctx: HttpContext) {
-        const { request, response } = ctx
-    
-        let palabra = request.cookie('palabra') as string | undefined
-    
-   
-        if (!palabra) {
-          response.cookie('palabra', '', { httpOnly: true })
-          response.cookie('intentos', '6', { httpOnly: true }) 
-          response.cookie('correcto', JSON.stringify([]), { httpOnly: true }) 
-        }
-      }
-    
-      public async update(ctx: HttpContext) {
-        const { params, request, response } = ctx
-        const p = params.p
-    
-        await this.handleCookies(ctx)
-    
-        let palabra = request.cookie('palabra') as string | undefined
-        let intentos = parseInt(request.cookie('intentos') || '0')
-        let correcto = JSON.parse(request.cookie('correcto') || '[]') as string[] 
-    
-        if (!palabra) {
-          return response.status(400).json({
-            msg: 'Para jugar al ahorcado primero debe crear una palabra',
-            letra: p,
-            palabra: palabra,
-            arrayPalabra: correcto,
-            intentos: intentos,
-          })
-        }
-    
-        if (p && p.length === 1) {
-          let desglosada = palabra.split('')
-          let c = true
-    
-          if (desglosada.includes(p)) {
-            correcto.push(p)
-            c = false
-          }
 
-          response.cookie('correcto', JSON.stringify(correcto), { httpOnly: true })
-    
-          if (c) {
-            intentos--
-          }
-    
-          response.cookie('intentos', intentos.toString(), { httpOnly: true })
-    
-          if (intentos === 0) {
-            response.clearCookie('palabra')
-            response.clearCookie('intentos')
-            response.clearCookie('correcto')
-            return response.json({ msg: 'Se han acabado los intentos... se ha muerto' })
-          }
-    
-          if (correcto.length === desglosada.length) {
-            response.clearCookie('palabra')
-            response.clearCookie('intentos')
-            response.clearCookie('correcto')
-            return response.status(201).json({
-              msg: `Muy buena, ganaste, la palabra fue ${palabra}. Ahora ingrese otra palabra`,
-              letra: p,
-              palabra: palabra,
-              arrayPalabra: correcto,
-              intentos: intentos,
-            })
-          }
-    
-          let estado = desglosada.map((letra) => (correcto.includes(letra) ? letra : '_')).join(' ')
-          if (correcto.includes(p)) {
-            return response.status(201).json({
-              msg: 'Has descubierto las siguientes letras de la palabra oculta',
-              estado: estado,
-              palabra: palabra,
-              arrayPalabra: correcto,
-              intentos: intentos
-            })
-          }
-    
-          return response.status(400).json({
-            msg: 'Esa letra ya la ha ingresado, intente ingresar otra',
-            estado: estado,
-            letra: p,
-            palabra: palabra,
-            letrasUsuario: correcto,
-            intentos: intentos,
-          })
-        } else {
-          return response.status(400).json({
-            msg: 'No ha ingresado una letra válida o la longitud es mayor a 1 caracter',
-            indicacion: `Aún le quedan ${intentos} intentos`,
-            letra: p,
-            palabra: palabra,
-            arrayPalabra: correcto,
-            intentos: intentos,
-          })
-        }
-      }
-    
-      public async show(ctx: HttpContext) {
-        const { params, response } = ctx
-        const p = params.p
-    
-        if (!p) {
-          return response.status(400).json({ msg: 'Por favor adjunte la palabra en la URI.' })
-        }
 
-        response.cookie('palabra', p, { httpOnly: true })
-        response.cookie('intentos', '6', { httpOnly: true }) 
-        response.cookie('correcto', JSON.stringify([]), { httpOnly: true }) 
-    
-        return response.status(201).json({
-          msg: `Se ha creado una palabra, ahora es: ${p}`,
-          indicacion: 'Ahora tienes que ir a la siguiente URI para comenzar el juego, tienes 6 intentos',
-          palabra: p,
-          intentos: 6,
-        })
+
+  public async update({ params, response }: HttpContext) {
+    const palabrita = params.p ? params.p : '0';
+    const oportunidad = parseInt(params.intentos) ? parseInt(params.intentos) : 6
+    const cantidadAdivina: number = parseInt(params.palabra) ? parseInt(params.palabra) : 0
+
+    const array: string[] = ['Hexakosioihexekontahexafobia', 'Vivienda', 'Santo', 'Padres', 'Mano', 'Feo'];
+    const palabraFiltrada = array.filter(elemento => elemento.length === cantidadAdivina);
+
+    const palabra = palabraFiltrada[0];
+    let p = palabrita.split('');
+
+
+
+    let intentos = oportunidad;
+    let desglosada = palabra.split(''); // Esto ahora funcionará
+    let c = true;
+    const coincidencias = p.filter((letra: string) => palabra.includes(letra));
+
+
+
+    if (coincidencias.length > 0) {
+      c = false;
+    }
+
+
+    if (c) {
+      intentos--;
+    }
+
+    if (intentos === 0) {
+      return response.json({ msg: 'Se han acabado los intentos... se ha muerto, escoja otra palabra' })
+    }
+    let w = 0;
+    p.forEach((letra: string) => {
+      if (desglosada.includes(letra)) {
+        w++;
       }
-    
-      public async destroy(ctx: HttpContext) {
-        const { response } = ctx
-        response.clearCookie('palabra')
-        response.clearCookie('intentos')
-        response.clearCookie('correcto')
-        return response.json({ msg: 'Cookies eliminadas correctamente' })
-      }
+    });
+    if (w === desglosada.length) {
+      return response.status(201).json({
+        msg: `Muy buena, ganaste, haz descubierto la palabra. Ahora ingrese una nueva`,
+        letra: p,
+        palabra: palabra,
+        arrayPalabra: desglosada,
+        intentos: intentos,
+      })
+    }
+
+
+
+    let estado = desglosada.map((letras) => {
+      let arrayLetras = letras.split('');
+      return arrayLetras.every((letra: string) => coincidencias.includes(letra)) ? arrayLetras.join('') : '_';
+    }).join(' ');
+
+
+    if (coincidencias.length === palabrita.length) {
+      return response.status(201).json({
+        msg: 'Has descubierto las siguientes letras de la palabra oculta',
+        estado: estado,
+        intentos: intentos
+      })
+    }
+
+    return response.status(400).json({
+      msg: 'La letra no formaba parte de la palabra, -1 intento',
+      indicacion: `Aún le quedan ${intentos-1} intentos`,
+      indicacion2: 'ingrese el valor de los intentos actuale en la uri, y borre la letra incorrecta de la uri',
+      letra: p,
+      intentos: intentos-1,
+      
+    })
+
+  }
+
+  public async show({ response }: HttpContext) {
+    const pala = new name();
+    const palabra = pala.obtenerNumeroAleatori();
+
+
+    return response.status(201).json({
+      msg: `ahora tiene que ingresar la longitud de las palabras por metodo Post`,
+      indicacion: 'Ahora tienes que ir a la siguiente URI para comenzar el juego, tienes 6 intentos',
+      instrucciones: 'para jugar correctamente tiene que poner los siguientes datos en orden despues de la uri 1 cantidad de caracteres, 2 intentos, 3 letra o letras a adivinar ',
+      Cantidad_Caracteres_de_la_palabra: palabra.length,
+      intentos: 6,
+    })
+  }
+
 }

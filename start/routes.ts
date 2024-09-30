@@ -17,6 +17,5 @@ router.get('/tablas/:num1?/:num2?/:fibonacci?', [TablasMultiplicarsController,'i
 
 router.post('/personas', [PersonasController,'store'])
 
-router.post('/ahorcado/:p?', [AhorcadosController,'update']);
-router.get('/ahorcado/:p?', [AhorcadosController,'show']);
-router.delete('/ahorcado', [AhorcadosController,'destroy']);
+router.post('/ahorcado/:palabra?/:intentos?/:p?', [AhorcadosController,'update']);
+router.get('/ahorcado', [AhorcadosController,'show']);
