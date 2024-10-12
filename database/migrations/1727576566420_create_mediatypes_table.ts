@@ -5,8 +5,9 @@ export default class extends BaseSchema {
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
+      //no se modifica nada
       table.bigIncrements('media_type_id')
-      table.string('name', 120)
+      table.string('name', 200)
       table.timestamp('created_at', { useTz: true }).defaultTo(this.now())
       table.timestamp('updated_at', { useTz: true }).nullable() 
     })

@@ -1,4 +1,4 @@
-import { DateTime } from 'luxon'
+// import { DateTime } from 'luxon'
 import Customer from '#models/customer'
 import InvoiceLine from '#models/invoiceline'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
@@ -8,7 +8,7 @@ import { BaseModel, column ,hasMany, belongsTo} from '@adonisjs/lucid/orm'
 export default class Invoice extends BaseModel {
   @column({ isPrimary: true })
   declare invoiceId: number
-
+/*
   @column()
   declare invoiceDate: DateTime
 
@@ -26,6 +26,7 @@ export default class Invoice extends BaseModel {
 
   @column()
   declare billingPostalCode: string
+  */
 
   @column()
   declare total: number

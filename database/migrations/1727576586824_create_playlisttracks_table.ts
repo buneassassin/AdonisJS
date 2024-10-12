@@ -5,6 +5,7 @@ export default class extends BaseSchema {
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
+      //no se modifica nada
       table.bigInteger('playlist_id').unsigned().references('playlist_id').inTable('playlists')
       table.bigInteger('track_id').unsigned().references('track_id').inTable('tracks')
       table.timestamp('created_at', { useTz: true }).defaultTo(this.now())

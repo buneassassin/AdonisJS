@@ -6,11 +6,11 @@ export default class Customer extends BaseModel {
 
   @column()
   declare firstName: string
-
+/*
   @column()
   declare lastName: string
 
-  @column()
+  /*@column()
   declare company: string
 
   @column()
@@ -33,10 +33,10 @@ export default class Customer extends BaseModel {
 
   @column()
   declare fax: string
-
+*/
   @column()
   declare email: string
 
   @column()
-  declare supportRepId: number
+  declare supportRepId: number  // no se toca
 }

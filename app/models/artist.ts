@@ -3,6 +3,9 @@ import type { HasMany } from '@adonisjs/lucid/types/relations'
 import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
 
 export default class Artist extends BaseModel {
+
+  //Nada que borrar
+
   @column({ isPrimary: true })
   declare artistId: number
 

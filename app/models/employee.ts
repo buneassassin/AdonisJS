@@ -1,4 +1,4 @@
-import { DateTime } from 'luxon'
+// import { DateTime } from 'luxon'
 import Customer from '#models/customer'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
@@ -7,12 +7,12 @@ export default class Employee extends BaseModel {
   @column({ isPrimary: true })
   declare employeeId: number
 
-  @column()
-  declare lastName: string
+//  @column()
+  //declare lastName: string
 
   @column()
   declare firstName: string
-
+/*
   @column()
   declare title: string
 
@@ -45,7 +45,7 @@ export default class Employee extends BaseModel {
 
   @column()
   declare fax: string
-
+*/
   @column()
   declare email: string
 

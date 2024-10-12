@@ -3,6 +3,8 @@ import type { HasMany } from '@adonisjs/lucid/types/relations'
 import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
 
 export default class Mediatype extends BaseModel {
+  public static table = 'media_types'
+  //nada que modificar
   @column({ isPrimary: true })
   declare mediaTypeId: number
 

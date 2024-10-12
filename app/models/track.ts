@@ -22,17 +22,17 @@ export default class Track extends BaseModel {
   @column()
   declare genreId: number
 
-  @column()
-  declare composer: string
+//  @column()
+  //declare composer: string
 
-  @column()
-  declare milliseconds: number
+//  @column()
+  //declare milliseconds: number
 
-  @column()
-  declare bytes: number
+  //@column()
+  //declare bytes: number
 
-  @column()
-  declare unitPrice: number
+//  @column()
+  //declare unitPrice: number
 
   @belongsTo(() => Album, {
     foreignKey: 'albumId',

@@ -4,6 +4,8 @@ import Track from '#models/track'
 import { BaseModel, column, belongsTo} from '@adonisjs/lucid/orm'
 
 export default class Invoiceline extends BaseModel {
+   public static table = 'invoice_lines'
+  //nada que modificar
   @column({ isPrimary: true })
   declare invoiceLineId: number
 

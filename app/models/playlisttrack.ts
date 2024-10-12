@@ -4,6 +4,7 @@ import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import { BaseModel, column, belongsTo } from '@adonisjs/lucid/orm'
 
 export default class Playlisttrack extends BaseModel {
+   public static table = 'playlist_tracks'
   @column({ isPrimary: true })
   declare playlistId: number
 

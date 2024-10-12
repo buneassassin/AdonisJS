@@ -5,6 +5,9 @@ import type { HasMany } from '@adonisjs/lucid/types/relations'
 import { BaseModel, column, belongsTo, hasMany } from '@adonisjs/lucid/orm'
 
 export default class Album extends BaseModel {
+
+  // nada que Borrar
+
   @column({ isPrimary: true })
   declare albumId: number
 

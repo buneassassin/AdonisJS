@@ -5,6 +5,8 @@ export default class extends BaseSchema {
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
+
+      //no se modifica nada
       table.bigIncrements('album_id')
       table.string('title', 160)
       table.bigInteger('artist_id').unsigned().references('artist_id').inTable('artists')

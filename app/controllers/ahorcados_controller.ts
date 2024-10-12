@@ -11,8 +11,6 @@ class name {
 
 export default class AhorcadosController {
 
-
-
   public async update({ params, response }: HttpContext) {
     const palabrita = params.p ? params.p : '0';
     const oportunidad = parseInt(params.intentos) ? parseInt(params.intentos) : 6

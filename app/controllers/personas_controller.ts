@@ -1,9 +1,9 @@
-import Persona from '#models/persona'
+import Persona from '#models/backup_models/persona'
 import { schema, rules } from '@adonisjs/validator'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class PersonasController {
-    public async store({ request, response }: HttpContext) {
+    public async store({ request, response }: HttpContext) { 
         const personaSchema = schema.create({
           nombre: schema.string({}, [rules.maxLength(60)]),
           apellido_paterno: schema.string({}, [rules.maxLength(60)]),

@@ -6,9 +6,9 @@ export default class extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.bigIncrements('employee_id')
-      table.string('last_name', 20)
+    //  table.string('last_name', 20)
       table.string('first_name', 30)
-      table.string('title', 30)
+      /*table.string('title', 30)
       table.bigInteger('reports_to').unsigned().references('employee_id').inTable('employees').nullable()
       table.dateTime('birth_date')
       table.dateTime('hire_date')
@@ -18,7 +18,7 @@ export default class extends BaseSchema {
       table.string('country', 40)
       table.string('postal_code', 10)
       table.string('phone', 24)
-      table.string('fax', 24)
+      table.string('fax', 24)*/
       table.string('email', 60)
       table.timestamp('created_at', { useTz: true }).defaultTo(this.now())
       table.timestamp('updated_at', { useTz: true }).nullable() 
