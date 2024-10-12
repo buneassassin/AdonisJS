@@ -35,7 +35,7 @@ router.get('/ver', [MusicaDbsController,'index']);
     guards: ['api'],
   })
 ) // Aquí protegemos el grupo de rutas con el middleware de autenticación
-
+// hola
 router.post('/register', [AuthController, 'register']).as('auth.register')
 router.post('/login', [AuthController, 'login']).as('auth.login')
 router.get('/me', [AuthController, 'me']).as('auth.me')
