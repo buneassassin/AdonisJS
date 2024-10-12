@@ -18,7 +18,11 @@ export default class MusicaDbsController {
   /**
    * Display form to create a new record
    */
-  async create({}: HttpContext) {}
+  async create({request}: HttpContext) {
+    const data = request.only(['nombre', 'edad', 'duenoId', 'razaId'])
+    const mascota = await Mascota.create(data)
+    return response.status(201).json(mascota)
+  }
 
   /**
    * Handle form submission for the create action
