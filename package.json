@@ -59,6 +59,7 @@
     "@adonisjs/lucid": "^21.3.0",
     "@adonisjs/validator": "^13.0.2-3",
     "@vinejs/vine": "^2.1.0",
+    "axios": "^1.7.7",
     "luxon": "^3.5.0",
     "mysql": "^2.18.1",
     "mysql2": "^3.11.3",
