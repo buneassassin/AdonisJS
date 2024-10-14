@@ -21,6 +21,7 @@ export default class AuthController {
     const data = await request.validateUsing(registerValidator)
     const user = await User.create(data)
 
+    if(Object.keys(data).length === 0)
     return User.accessTokens.create(user)
   }
 

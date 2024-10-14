@@ -19,11 +19,13 @@ export default class Album extends BaseModel {
 
   @belongsTo(() => Artist, {
     foreignKey: 'artistId',
+    
   })
   declare artist: BelongsTo<typeof Artist>
 
   @hasMany(() => Track, {
     foreignKey: 'albumId',
+    
   })
   declare tracks: HasMany<typeof Track>
 }

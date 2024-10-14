@@ -32,15 +32,15 @@ router.group(() => {
 
   router.get('/inicio', [MusicaDbsController, 'index'])
   // Ruta para obtener una album y en especifico específica y sus relaciones
-  router.get('/verUno/:id', [MusicaDbsController,'showUno']);
+  router.get('/verUno/:id', [MusicaDbsController,'showUno']); // falta por arreglar
   // Ruta para crear un album v
   router.post('/crear_artista', [MusicaDbsController, 'createArtist'])
    // Rutas para dueños
    router.post('/crear_album', [MusicaDbsController, 'createAlbum'])
   // Ruta para actualizar una mascota
-  router.put('/mascotas/:id', [MusicaDbsController, 'update'])
+  router.put('/actualizar', [MusicaDbsController, 'update'])
   // Ruta para eliminar una mascota
-  router.delete('/mascotas/:idArt/:idAlb', [MusicaDbsController, 'destroy'])
+  router.delete('/destroy/:playlistId', [MusicaDbsController, 'destroy'])
  
   // Ruta para obtener todos los artistas y sus albumes
   router.get('/verTodo', [MusicaDbsController, 'showAll'])
@@ -58,5 +58,7 @@ router.group(() => {
 // hola
 router.post('/register', [AuthController, 'register']).as('auth.register')
 router.post('/login', [AuthController, 'login']).as('auth.login')
+router.post('/logout', [AuthController, 'logout'])
 router.get('/me', [AuthController, 'me']).as('auth.me')
 
+// Vern77@yahoo.com

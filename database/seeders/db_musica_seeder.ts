@@ -16,23 +16,23 @@ import { BaseSeeder } from '@adonisjs/lucid/seeders'
 export default class extends BaseSeeder {
   async run() {
    // Insertar primero los registros que no dependen de otros
-   await ArtistFactory.createMany(10)
-   await GenreFactory.createMany(10)
-   await MediatypeFactory.createMany(10)
+   await ArtistFactory.createMany(1)
+   await GenreFactory.createMany(1)
+   await MediatypeFactory.createMany(1)
 
    // Luego insertar registros que dependen de los anteriores
-   await AlbumFactory.createMany(10) // Depende de Artist
-   await TrackFactory.createMany(10) // Depende de Album, Genre, MediaType
+   await AlbumFactory.createMany(1) // Depende de Artist
+   await TrackFactory.createMany(1) // Depende de Album, Genre, MediaType
 
    // Insertar registros que dependen de otros modelos
-   await CustomerFactory.createMany(10)
-   await EmployeeFactory.createMany(10)
+   await CustomerFactory.createMany(1)
+   await EmployeeFactory.createMany(1)
    
-   await InvoiceFactory.createMany(10) // Depende de Customer
-   await InvoicelineFactory.createMany(10) // Depende de Invoice y Track
+   await InvoiceFactory.createMany(1) // Depende de Customer
+   await InvoicelineFactory.createMany(1) // Depende de Invoice y Track
 
    // Finalmente, insertar las playlists y tracks en playlists
-   await PlaylistFactory.createMany(10)
-   await PlaylisttrackFactory.createMany(10) // Depende de Playlist y Track
+   await PlaylistFactory.createMany(1)
+   await PlaylisttrackFactory.createMany(1) // Depende de Playlist y Track
   }
 }
