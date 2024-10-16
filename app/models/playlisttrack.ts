@@ -2,6 +2,7 @@ import Playlist from '#models/playlist'
 import Track from '#models/playlist'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import { BaseModel, column, belongsTo } from '@adonisjs/lucid/orm'
+import { DateTime } from 'luxon'
 
 export default class Playlisttrack extends BaseModel {
    public static table = 'playlist_tracks'
@@ -20,4 +21,7 @@ export default class Playlisttrack extends BaseModel {
     foreignKey: 'trackId',
   })
   declare track: BelongsTo<typeof Track>
+
+  @column.dateTime({ autoUpdate: false })
+  declare deletedAt: DateTime | null
 }

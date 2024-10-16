@@ -1,4 +1,5 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { DateTime } from 'luxon'
 
 export default class Customer extends BaseModel {
   @column({ isPrimary: true })
@@ -39,4 +40,7 @@ export default class Customer extends BaseModel {
 
   @column()
   declare supportRepId: number  // no se toca
+
+  @column.dateTime({ autoUpdate: false })
+  declare deletedAt: DateTime | null
 }

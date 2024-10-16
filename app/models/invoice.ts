@@ -4,6 +4,7 @@ import InvoiceLine from '#models/invoiceline'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 import { BaseModel, column ,hasMany, belongsTo} from '@adonisjs/lucid/orm'
+import { DateTime } from 'luxon'
 
 export default class Invoice extends BaseModel {
   @column({ isPrimary: true })
@@ -43,4 +44,7 @@ export default class Invoice extends BaseModel {
     foreignKey: 'invoiceId',
   })
   declare invoiceLines: HasMany<typeof InvoiceLine>
+
+  @column.dateTime({ autoUpdate: false })
+  declare deletedAt: DateTime | null
 }

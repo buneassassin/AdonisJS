@@ -2,6 +2,7 @@
 import Customer from '#models/customer'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import { DateTime } from 'luxon'
 
 export default class Employee extends BaseModel {
   @column({ isPrimary: true })
@@ -53,4 +54,7 @@ export default class Employee extends BaseModel {
     foreignKey: 'supportRepId',
   })
   declare customers: HasMany<typeof Customer>
+
+  @column.dateTime({ autoUpdate: false })
+  declare deletedAt: DateTime | null
 }

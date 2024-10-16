@@ -38,9 +38,9 @@ router.group(() => {
    // Rutas para dueños
    router.post('/crear_album', [MusicaDbsController, 'createAlbum'])
   // Ruta para actualizar una mascota
-  router.put('/actualizar', [MusicaDbsController, 'update'])
+  router.put('/actualizar/:id', [MusicaDbsController, 'update'])
   // Ruta para eliminar una mascota
-  router.delete('/destroy/:playlistId', [MusicaDbsController, 'destroy'])
+  router.delete('/destroy/:id', [MusicaDbsController, 'destroy'])
  
   // Ruta para obtener todos los artistas y sus albumes
   router.get('/verTodo', [MusicaDbsController, 'showAll'])

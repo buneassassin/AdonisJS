@@ -21,7 +21,8 @@ export default class extends BaseSchema {
       table.string('fax', 24)*/
       table.string('email', 60)
       table.timestamp('created_at', { useTz: true }).defaultTo(this.now())
-      table.timestamp('updated_at', { useTz: true }).nullable() 
+      table.timestamp('updated_at', { useTz: true }).nullable()
+      table.timestamp('deleted_at', { useTz: true }).nullable()
     })
   }
 

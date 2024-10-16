@@ -9,7 +9,8 @@ export default class extends BaseSchema {
       table.bigIncrements('media_type_id')
       table.string('name', 200)
       table.timestamp('created_at', { useTz: true }).defaultTo(this.now())
-      table.timestamp('updated_at', { useTz: true }).nullable() 
+      table.timestamp('updated_at', { useTz: true }).nullable()
+      table.timestamp('deleted_at', { useTz: true }).nullable()
     })
   }
 

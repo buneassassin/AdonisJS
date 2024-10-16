@@ -15,7 +15,8 @@ export default class extends BaseSchema {
       table.string('billing_postal_code', 10)*/
       table.decimal('total', 10, 2)
       table.timestamp('created_at', { useTz: true }).defaultTo(this.now())
-      table.timestamp('updated_at', { useTz: true }).nullable() 
+      table.timestamp('updated_at', { useTz: true }).nullable()
+      table.timestamp('deleted_at', { useTz: true }).nullable()
     })
   }
 

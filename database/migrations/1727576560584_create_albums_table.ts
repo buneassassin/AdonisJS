@@ -11,7 +11,8 @@ export default class extends BaseSchema {
       table.string('title', 160)
       table.bigInteger('artist_id').unsigned().references('artist_id').inTable('artists')
       table.timestamp('created_at', { useTz: true }).defaultTo(this.now())
-      table.timestamp('updated_at', { useTz: true }).nullable() 
+      table.timestamp('updated_at', { useTz: true }).nullable()
+      table.timestamp('deleted_at', { useTz: true }).nullable()
     })
   }
 

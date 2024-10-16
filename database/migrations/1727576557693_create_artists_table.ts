@@ -10,7 +10,8 @@ export default class extends BaseSchema {
       table.bigIncrements('artist_id')
       table.string('name', 120)
       table.timestamp('created_at', { useTz: true }).defaultTo(this.now())
-      table.timestamp('updated_at', { useTz: true }).nullable() 
+      table.timestamp('updated_at', { useTz: true }).nullable()
+      table.timestamp('deleted_at', { useTz: true }).nullable()
     })
   }
 

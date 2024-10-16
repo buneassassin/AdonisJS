@@ -1,5 +1,4 @@
-import { AlbumFactory } from '#database/factories/album_factory'
-import { ArtistFactory } from '#database/factories/artist_factory'/*
+/*
 import { CustomerFactory } from '#database/factories/customer_factory'
 import { EmployeeFactory } from '#database/factories/employee_factory'
 import { GenreFactory } from '#database/factories/genre_factory'
@@ -11,8 +10,8 @@ import { PlaylisttrackFactory } from '#database/factories/playlisttrack_factory'
 import { TrackFactory } from '#database/factories/track_factory'
 import axios from 'axios'
 import env from '#start/env';
-
 */
+
 
 import Artist from '#models/artist'
 
@@ -25,6 +24,7 @@ import Track from '#models/track'
 
 import Playlist from '#models/playlist'
 import Playlisttrack from '#models/playlisttrack'
+import Album from '#models/album'
 
 
 
@@ -77,7 +77,7 @@ await auth.user!.related('mascotas').create(postData)
         .preload('mediaType') // Carga la relación de tipo de media
 
       // Devuelve la respuesta en formato JSON
-      return response.json({ eltrack/*, Tabla */})
+      return response.json({ eltrack/*, Tabla */ })
     } catch (error) {
       // Manejo de errores
       return response.status(500).json({
@@ -129,35 +129,21 @@ await auth.user!.related('mascotas').create(postData)
   /**
    * Display form to create a new record
    */
-  async createAlbum({ response }: HttpContext) {
+  async createAlbum({ request, response }: HttpContext) {
     // crear un nuevo album vinculado a un artista
-    try {
-      await AlbumFactory.createMany(1)
-      return response.status(201).json(
-        {
-          mensaje: "Se a creado el artista",
-
-        })
-    } catch (error) {
-      return response.status(404).json({ message: 'no se pudo ejecuar la factory' })
-    }
+    const data = request.only(['title', 'artistId'])
+    const abim = await Album.create(data)
+    return response.status(201).json(abim)
   }
 
   /**
    * Handle form submission for the create action
    */
-  async createArtist({response }: HttpContext) {
+  async createArtist({ request, response }: HttpContext) {
 
-    try {
-      await ArtistFactory.createMany(1)
-      return response.status(201).json(
-        {
-          mensaje: "Se a creado el artista",
-
-        })
-    } catch (error) {
-      return response.status(404).json({ message: 'no se pudo ejecuar la factory' })
-    }
+    const data = request.only(['name'])
+    const abim = await Artist.create(data)
+    return response.status(201).json(abim)
   }
 
 
@@ -187,61 +173,54 @@ await auth.user!.related('mascotas').create(postData)
   /**
    * Edit individual record
    */
-  async update({ response, request }: HttpContext) {
-    // modificar un la cantidad y el precio de la tabla InvoiceLine ya creada
+  async update({ response, params, request }: HttpContext) {
+
+
+    const invoiceLine = await Invoiceline.findOrFail(params.id)
+
+    if (!invoiceLine) {
+      return response.status(404).json({ message: 'Invoice line not found' })
+    }
+
+    invoiceLine.unitPrice = request.input('unitPrice')
+    invoiceLine.quantity = request.input('quantity')
+    
+      
+    await invoiceLine.save()
+
+    return response.json(invoiceLine)
+  }
+
+
+  public async destroy({ response, params }: HttpContext) {
+    const playlistId = params.id
+
     try {
-      const data = request.only(['invoiceLineId', 'unitPrice', 'quantity'])
-      const invLine = await Invoiceline.findOrFail(data.invoiceLineId)
-      invLine.merge(data)
-      await invLine.save()
-      return response.json({
-        mensaje: "se han modificado los datos exitosamente",
-        datosCambiados: invLine
+      // Obtener y eliminar todos los registros relacionados en playlist_tracks
+      const deletedTracks = await Playlisttrack.query()
+        .where('playlistId', playlistId)
+        .select('*') // Selecciona todos los campos de los registros que se eliminarán
+
+      await Playlisttrack.query().where('playlistId', playlistId).delete()
+
+      // Obtener y eliminar el registro en la tabla playlist
+      const deletedPlaylist = await Playlist.query()
+        .where('playlistId', playlistId)
+        .select('*') // Selecciona todos los campos del registro que se eliminará
+      await Playlist.query().where('playlistId', playlistId).delete()
+
+      if (deletedTracks.length === 0 && deletedPlaylist.length === 0) {
+        return response.status(404).json({ message: 'No se encontraron registros para eliminar' })
+      }
+
+      return response.status(200).json({
+        message: 'Playlist y sus tracks relacionados han sido eliminados exitosamente',
+        deletedPlaylist,
+        deletedTracks,
       })
     } catch (error) {
-      return response.status(404).json({ message: 'voice line no encontrado' })
+      return response.status(500).json({ message: 'Error al eliminar la playlist y sus tracks', error })
     }
   }
-
-  /**
-   * Handle form submission for the edit action
-   */
-  // async update({ params, request }: HttpContext) {}
-
-  /**
-   * Delete record
-   */
-
-  // eliminar un artista
-
-  // no usar
-
-
-  //Medodo para borrar un empleado
-  async destroy({ params, response }: HttpContext) {
-    try {
-      // Buscar el playlist track por su playlistId
-      const playlistTrack = await Playlisttrack.query()
-        .where('playlistId', params.playlistId)
-        .firstOrFail()
-
-      // Buscar la playlist relacionada con ese playlist track
-      const playlist = await Playlist.findOrFail(playlistTrack.playlistId)
-
-      // Eliminar la playlist
-      await playlist.delete()
-
-      // Eliminar el playlist track
-      await playlistTrack.delete()
-
-      return response.status(204).json({ message: 'La playlist y su playlist track han sido eliminados correctamente' })
-    } catch (error) {
-      return response.status(404).json({ message: 'Error al eliminar la playlist y su playlist track', error: error.message })
-    }
-  }
-
-
-
-
   // oat_MQ.T2tIQ01fUHJZbmw3bGtDRnZodmxUandRTWJ4ZXJ0cGlrSjVEd3hXajE2NTk0Njk1MzY
 }

@@ -21,6 +21,7 @@ export default class extends BaseSchema {
       table.bigInteger('support_rep_id').unsigned().references('employee_id').inTable('employees').nullable()
       table.timestamp('created_at', { useTz: true }).defaultTo(this.now())
       table.timestamp('updated_at', { useTz: true }).nullable() 
+      table.timestamp('deleted_at', { useTz: true }).nullable()
     })
   }
 
